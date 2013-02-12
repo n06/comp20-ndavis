@@ -7,18 +7,18 @@
 <script type=text/javascript>
 	function update()
 	{
-		var d = new Date();
-		var curr_date = d.getDate();
-		var curr_month = d.getMonth() + 1; 
-		var curr_year = d.getFullYear();
-		var curr_hour = d.getHours();
-		var curr_min = d.getMinutes();
-		var status = document.getElementById("msg").value;
-		var update = (curr_date + "/" + curr_month + "/" + curr_year + " " + curr_hour + ":" + curr_min + " - " + status);
-		var newnode=document.createElement("LI");
-		var textnode=document.createTextNode(update);
+		d = new Date();
+		curr_date = d.getDate();
+		curr_month = d.getMonth() + 1; 
+		curr_year = d.getFullYear();
+		curr_hour = d.getHours();
+		curr_min = d.getMinutes();
+		status = document.getElementById("msg").value;
+		update = (curr_date + "/" + curr_month + "/" + curr_year + " " + curr_hour + ":" + curr_min + " - " + status);
+		newnode=document.createElement("LI");
+		textnode=document.createTextNode(update);
 		newnode.appendChild(textnode);			
-		var list=document.getElementById("status")
+		list=document.getElementById("status")
 		list.insertBefore(newnode,list.childNodes[0]);
 		
 		
