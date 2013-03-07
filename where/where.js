@@ -102,7 +102,10 @@ function drawW_C(map)
 			for (var m in C_W) {
 				C_W[m].setMap(map);
 				name = C_W[m].title
-				dist = find_waldo(lat, lon);
+				console.log('Lat: ' + lat);
+				console.log('Lon: ' + lon);
+				dist = find_waldo(C_W[m].position.ib, C_W[m].position.jb);
+				console.log('Dist: ' + dist);
 				contentWC = 'Distance to ' + name + ' is: ' + dist
 				infowindow3 = new google.maps.InfoWindow();
 				infowindow3.setContent(contentWC);
