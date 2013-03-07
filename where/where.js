@@ -65,8 +65,8 @@ var addListener = function (m)
 function init() 
 {
 	map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-	drawW_C(map)
 	drawMap(map);
+	drawW_C(map)
 	
 }
 	
@@ -98,13 +98,12 @@ function drawW_C(map)
 					pt = new google.maps.LatLng(lat, lon);	
 					C_W.push(new google.maps.Marker({position: pt, title: "Carmen Sandiego", icon: "assets/carmen_icon.png"})); 
 				}
-				dist = find_waldo(userLat, userLng, lat, lon);
+				dist = find_waldo(lat, lon);
 			}
 			for (var m in C_W) {
 				C_W[m].setMap(map);
 				name = C_W[m].title
 				contentWC = 'Distance to ' + name + ' is: ' + dist
-				console.log(contentWC);
 				infowindow3 = new google.maps.InfoWindow();
 				infowindow3.setContent(contentWC);
 				infowindow3.open(map, C_W[m]);
@@ -292,6 +291,8 @@ function find_closest_marker(userLat, userLng)
 {
 	var lat = userLat;
 	var lng = userLng;
+	console.log(userLat);
+	console.log(userLng);
 	var R = 6371; // radius of earth in km
 	var distances = [];
 	var closest = -1;
@@ -343,10 +344,10 @@ function find_closest_marker(userLat, userLng)
 }
 
 
-function find_waldo(userLat, userLng, wcLat, wcLong) 
+function find_waldo(wcLat, wcLong) 
 {
-	var lat = userLat;
-	var lng = userLng;
+	var lat = user.ib;
+	var lng = user.jb;
 	var R = 6371; // radius of earth in km
 	var distances;
 	var closest = -1;
