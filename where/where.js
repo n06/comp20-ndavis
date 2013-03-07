@@ -89,9 +89,7 @@ function drawW_C(map)
 			for(var i = 0; i < obj.length; i++) {
 				lat = obj[i].loc.latitude;
 				lon = obj[i].loc.longitude;
-				
-				//loc = find_closest_marker(lat, lon, );
-																								
+				find_waldo(userLat, userLng, lat, lon);																				
 				if(obj[i].name == "Waldo"){
 					pt = new google.maps.LatLng(lat, lon);	
 					C_W.push(new google.maps.Marker({position: pt, title: "Waldo", icon: "assets/waldo_icon.png"})); 
@@ -100,7 +98,7 @@ function drawW_C(map)
 					pt = new google.maps.LatLng(lat, lon);	
 					C_W.push(new google.maps.Marker({position: pt, title: "Carmen Sandiego", icon: "assets/carmen_icon.png"})); 
 				}
-			}	
+			}
 			for (var m in C_W) {
 				C_W[m].setMap(map);
 			}
@@ -339,13 +337,13 @@ function find_closest_marker(userLat, userLng)
 	infowindow.open(map, markers[closest]);
 }
 
-/*
-function find_closest_marker(userLat, userLng, wcLat, wcLong) 
+
+function find_waldo(userLat, userLng, wcLat, wcLong) 
 {
 	var lat = userLat;
 	var lng = userLng;
 	var R = 6371; // radius of earth in km
-	var distances = [];
+	var distances;
 	var closest = -1;
 	var mlat = wcLat;
 	var mlng = wcLong;
@@ -355,42 +353,8 @@ function find_closest_marker(userLat, userLng, wcLat, wcLong)
 	Math.cos(rad(lat)) * Math.cos(rad(lat)) * Math.sin(dLong/2) * Math.sin(dLong/2);
 	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 	var d = R * c;
-	distances[i] = d;
-	if ( closest == -1 || d < distances[closest] ) {
-		closest = i;
-	}
-	console.log(closest);
-	try {
-		realTime.open("GET", "http://mbtamap-cedar.herokuapp.com/mapper/redline.json", true);
-	} catch (error) {}
-	// Execute the request
-	realTime.send(null);
-	// Handle the request (however you want)
-	realTime.onreadystatechange = function() 
-	{
-		if(realTime.readyState == 4 && realTime.status == 200)
-		{
-			console.log(markers[closest].title);
-			content = "CLOSEST STATION: " + markers[closest].title;
-			results = JSON.parse(realTime.responseText);
-			if (results.length > 0) {
-			content += '<table id="schedule"><tr><th>Line</th><th>Trip #</th><th>Direction</th><th>Arrival Time</th></tr>';
-			for(i in results){
-				content += '<tr><td>' + results[i].Line + '</td><td>' + results[i].Trip + '</td><td>';
-				if(results[i].PlatformKey.charAt(4) == 'S'){
-					content += 'South';
-				} else {
-					content += 'North';
-				}
-				content += '</td><td>' + results[i].Time + '</td></tr>';
-			}
-			content += '</table>';
-			} else {
-				content += "<p>No schedule of upcoming trains for this station.</p>";
-			}
-			infowindow.setContent('<div id="infowindow">' + content + '</div>');	
-		}
-	}
-	infowindow.open(map, markers[closest]);
+	distances = d;
+		alert("The distance between you and carmen/waldo is: " + distances);
+			
 }
-*/
+
