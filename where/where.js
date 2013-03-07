@@ -9,6 +9,7 @@ var redBranchBraintree = [];
 var markers = [];
 var results;
 var infowindow = new google.maps.InfoWindow();
+var distanceWindow = new google.maps.InfoWindow();
 var places;
 
 var C_W = [];
@@ -88,8 +89,7 @@ function drawW_C(map)
 			
 			for(var i = 0; i < obj.length; i++) {
 				lat = obj[i].loc.latitude;
-				lon = obj[i].loc.longitude;
-				find_waldo(userLat, userLng, lat, lon);																				
+				lon = obj[i].loc.longitude;																				
 				if(obj[i].name == "Waldo"){
 					pt = new google.maps.LatLng(lat, lon);	
 					C_W.push(new google.maps.Marker({position: pt, title: "Waldo", icon: "assets/waldo_icon.png"})); 
@@ -98,6 +98,11 @@ function drawW_C(map)
 					pt = new google.maps.LatLng(lat, lon);	
 					C_W.push(new google.maps.Marker({position: pt, title: "Carmen Sandiego", icon: "assets/carmen_icon.png"})); 
 				}
+				var dist = find_waldo(userLat, userLng, lat, lon);
+				name = this.name;
+				content = 'Distance to ' + name + ' is: ' + dist
+				distanceWindow.setContent(content);
+				distanceWindow.open(map, pt);
 			}
 			for (var m in C_W) {
 				C_W[m].setMap(map);
@@ -302,7 +307,6 @@ function find_closest_marker(userLat, userLng)
 			closest = i;
 		}
 	}
-	console.log(closest);
 	try {
 		realTime.open("GET", "http://mbtamap-cedar.herokuapp.com/mapper/redline.json", true);
 	} catch (error) {}
@@ -313,7 +317,6 @@ function find_closest_marker(userLat, userLng)
 	{
 		if(realTime.readyState == 4 && realTime.status == 200)
 		{
-			console.log(markers[closest].title);
 			content = "CLOSEST STATION: " + markers[closest].title;
 			results = JSON.parse(realTime.responseText);
 			if (results.length > 0) {
@@ -354,7 +357,6 @@ function find_waldo(userLat, userLng, wcLat, wcLong)
 	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 	var d = R * c;
 	distances = d;
-		alert("The distance between you and carmen/waldo is: " + distances);
-			
+	return distances;
 }
 
