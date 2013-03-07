@@ -98,11 +98,11 @@ function drawW_C(map)
 					pt = new google.maps.LatLng(lat, lon);	
 					C_W.push(new google.maps.Marker({position: pt, title: "Carmen Sandiego", icon: "assets/carmen_icon.png"})); 
 				}
-				dist = find_waldo(lat, lon);
 			}
 			for (var m in C_W) {
 				C_W[m].setMap(map);
 				name = C_W[m].title
+				dist = find_waldo(lat, lon);
 				contentWC = 'Distance to ' + name + ' is: ' + dist
 				infowindow3 = new google.maps.InfoWindow();
 				infowindow3.setContent(contentWC);
