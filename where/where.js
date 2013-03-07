@@ -9,8 +9,8 @@ var redBranchBraintree = [];
 var markers = [];
 var results;
 var infowindow = new google.maps.InfoWindow();
-var distanceWindow = new google.maps.InfoWindow();
 var places;
+var dist;
 
 var C_W = [];
 	var map;
@@ -98,14 +98,16 @@ function drawW_C(map)
 					pt = new google.maps.LatLng(lat, lon);	
 					C_W.push(new google.maps.Marker({position: pt, title: "Carmen Sandiego", icon: "assets/carmen_icon.png"})); 
 				}
-				var dist = find_waldo(userLat, userLng, lat, lon);
-				name = this.name;
-				content = 'Distance to ' + name + ' is: ' + dist
-				distanceWindow.setContent(content);
-				distanceWindow.open(map, pt);
+				dist = find_waldo(userLat, userLng, lat, lon);
 			}
 			for (var m in C_W) {
 				C_W[m].setMap(map);
+				name = C_W[m].title
+				contentWC = 'Distance to ' + name + ' is: ' + dist
+				console.log(contentWC);
+				infowindow3 = new google.maps.InfoWindow();
+				infowindow3.setContent(contentWC);
+				infowindow3.open(map, C_W[m]);
 			}
 			
 		}
