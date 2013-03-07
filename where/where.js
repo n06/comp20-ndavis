@@ -248,25 +248,6 @@ function renderMap()
 		infowindow.setContent(marker.title);
 		infowindow.open(map, marker);
 	});
-	// Calling Google Places API
-	var request = {
-		location: user,
-		radius: '500',
-		types: ['food']
-	};
-	service = new google.maps.places.PlacesService(map);
-	service.search(request, callback);
-}
-
-function callback(results, status) 
-{
-	if (status == google.maps.places.PlacesServiceStatus.OK) {
-		//alert("Got places back!");
-		places = results;
-		for (var i = 0; i < results.length; i++) {
-			createMarker(results[i]);
-		}
-	}
 }
 
 function createMarker(place) 
