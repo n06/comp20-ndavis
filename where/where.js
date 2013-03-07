@@ -48,7 +48,7 @@
 						} else {
 							content += "<p>No schedule of upcoming trains for this station.</p>";
 						}
-						infowindow.setContent(content);	
+						infowindow.setContent('<div id="infowindow">' + content + '</div>');	
 					}
 				}
         	infowindow.open(map, mvcObj);                
@@ -220,7 +220,10 @@
 		redBranchBraintree.push(pt);
 		for (var m in markers) {
 			markers[m].setMap(map);
-			addListener(m);		}
+			addListener(m);		
+			}
+			
+			
 			// Render polylines (Red, Orange, and Blue)
 			redLine = new google.maps.Polyline({
 				path: redStations,
@@ -306,17 +309,3 @@
 				infowindow.open(map, this);
 			});
 		}
-		
-		function stationTables(obj, content, map, mvcObj){
-			if (obj.length > 0) {
-				content += '<table id="schedule"><tr><th>Line</th><th>Trip #</th><th>Direction</th><th>Time Remaining</th></tr>';
-				content += '</table>';
-			} else {
-				content += "<p>No schedule of upcoming trains for this station.</p>";
-			}
-			infowindow.setContent(content);		
-			infowindow.open(map, mvcObj);
-		}
-		
-		
-		
