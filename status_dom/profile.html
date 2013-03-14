@@ -5,7 +5,7 @@
 <head>
 <title>Fecesbook</title>
 <script type=text/javascript>
-	function update()
+	function init()
 	{
 		d = new Date();
 		curr_date = d.getDate();
@@ -13,20 +13,28 @@
 		curr_year = d.getFullYear();
 		curr_hour = d.getHours();
 		curr_min = d.getMinutes();
+	}
+	function store(){
 		status = document.getElementById("msg").value;
+		localStorage[new Date().getTime()] = status;
+		reload();	
+	}
+	function reload(){
 		update = (curr_date + "/" + curr_month + "/" + curr_year + " " + curr_hour + ":" + curr_min + " - " + status);
-		newnode=document.createElement("LI");
-		textnode=document.createTextNode(update);
-		newnode.appendChild(textnode);			
-		list=document.getElementById("status")
-		list.insertBefore(newnode,list.childNodes[0]);
+		list = document.getElementById("update")
+		for(key in localStorage)
+		{
+			update = update + "<li>" + localStorage[key] + "</li>\n";
+			
+		}
+		list.innerHTML = update;
 		
 		
 	}
 </script>
 </head>
 
-<body>
+<body onload="init()">
 	<h1>Fecebook</h1>
 	<div id="nav">
 		<ul>
@@ -40,13 +48,13 @@
 	</div>
 	<h2 id="fullname">Barney Gumble</h2>
 	<p><img src="https://s3.amazonaws.com/tufts-cs-mchow-images/barneymug.gif" alt="profile" /></p>
-	<h3>What are you thinking about? <input type="text" id="msg" name="msg" size="30" onchange="update()" /></h3>
+	<h3>What are you thinking about? <input type="text" id="msg" name="msg" size="30" onchange="store()" /></h3>
 	<h3>Updates</h3>
 	<ul id="status">
 	</ul>
 	<div id="yesterday">
 		<h3>Updates from yesterday:</h3>
-		<ul>
+		<ul id="update">
 			<li>Alice is now connected to Bob</li>
 			<li>Tom recommends Jerry</li>
 			<li>Harry just returned from a trip from Curaco</li>
