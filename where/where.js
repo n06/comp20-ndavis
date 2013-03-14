@@ -102,9 +102,9 @@ function drawW_C(map)
 			for (var m in C_W) {
 				C_W[m].setMap(map);
 				name = C_W[m].title
-				console.log('Lat: ' + lat);
-				console.log('Lon: ' + lon);
-				dist = find_waldo(C_W[m].position.ib, C_W[m].position.jb);
+				console.log('Lat of ' + C_W[m].title + ': ' + C_W[m].position.ib);
+				console.log('Lon of ' + C_W[m].title + ': ' + C_W[m].position.jb);
+				dist = find_waldo(m);
 				console.log('Dist: ' + dist);
 				contentWC = 'Distance to ' + name + ' is: ' + dist
 				infowindow3 = new google.maps.InfoWindow();
@@ -328,15 +328,15 @@ function find_closest_marker(userLat, userLng)
 }
 
 
-function find_waldo(wcLat, wcLong) 
+function find_waldo(m) 
 {
 	var lat = user.ib;
 	var lng = user.jb;
 	var R = 6371; // radius of earth in km
 	var distances;
 	var closest = -1;
-	var mlat = wcLat;
-	var mlng = wcLong;
+	var mlat = C_W[m].position.ib;
+	var mlng = C_W[m].position.jb;
 	var dLat  = rad(mlat - lat);
 	var dLong = rad(mlng - lng);
 	var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
@@ -344,6 +344,7 @@ function find_waldo(wcLat, wcLong)
 	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 	var d = R * c;
 	distances = d;
-	return distances;
+	console.log(distances);
+	return d;
 }
 
