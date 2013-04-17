@@ -21,7 +21,7 @@
 	}
 	function reload(){
 		update = (curr_date + "/" + curr_month + "/" + curr_year + " " + curr_hour + ":" + curr_min + " - " + status);
-		list = document.getElementById("update")
+		list = document.getElementById("status")
 		for(key in localStorage)
 		{
 			update = update + "<li>" + localStorage[key] + "</li>\n";

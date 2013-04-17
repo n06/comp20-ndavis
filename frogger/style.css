@@ -1,16 +1,64 @@
-#game_div{
-    text-align: center;
-}
-
 canvas {
-    background-color: #cb630a;
-    padding: 5px;
-    margin: 10px;
-    border-width: 60px;
-    border-color: #010101;
-    border-style: solid;
-}
+  background-color: #cb630a;
+  padding: 5px;
+  display: block;
+  margin: 10px auto;
+  border-width: 60px;
+  border-color: #010101;
+  border-style: solid;
+  position: relative; }
+
+.ui-dialog {
+  display: block;
+  color: #000;
+  position: absolute;
+  width: 300px;
+  font-size: 22px;
+  text-align: center;
+  line-height: 70px;
+  top: 50%;
+  left: 50%;
+  margin-left: -150px;
+  margin-top: -50px;
+  -webkit-box-shadow: inset 0px 0px 2px 0px white, 0px 0px 10px #313131;
+  box-shadow: inset 0px 0px 2px 0px white, 0px 0px 10px #313131;
+  -webkit-border-radius: 7px;
+  border-radius: 7px;
+  text-shadow: 0px 1px 0px #e1e1e1;
+  background: #74ac3d;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #74ac3d 0%, #578e37 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #74ac3d), color-stop(100%, #578e37));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #74ac3d 0%, #578e37 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #74ac3d 0%, #578e37 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #74ac3d 0%, #578e37 100%);
+  /* IE10+ */
+  background: linear, to bottom, #74ac3d 0%, #578e37 100%;
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#74ac3d', endColorstr='#578e37',GradientType=0 );
+  /* IE6-9 */
+  font-family: sans-serif;
+  cursor: pointer; }
+  .ui-dialog:hover {
+    -webkit-transform: scale(0.97);
+    -moz-transform: scale(0.97);
+    -ms-transform: scale(0.97);
+    -o-transform: scale(0.97);
+    transform: scale(0.97); }
+  .ui-dialog:active {
+    background: #578e37; }
+
+html {
+  height: 100%; }
 
 body {
-    background-color: #128138;
-}
+  height: 95%;
+  position: relative;
+  background-color: #128138; }
+
+img {
+  border: 1px solid #000; }

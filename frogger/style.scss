@@ -1,0 +1,54 @@
+@import "bourbon/bourbon";
+
+canvas {
+    background-color: #cb630a;
+    padding: 5px;
+    display: block;
+    margin: 10px auto;
+    border-width: 60px;
+    border-color: #010101;
+    border-style: solid;
+    position: relative;
+}
+.ui-dialog {
+	display: block;
+	color: #000;
+	position: absolute;
+	width: 300px;
+	font-size: 22px;
+	text-align: center;
+	line-height: 70px;
+	top: 50%;
+	left: 50%;
+	margin-left: -150px;
+	margin-top: -50px;
+	@include box-shadow(inset 0px 0px 2px 0px #fff, 0px 0px 10px #313131);
+	@include border-radius(7px);
+	text-shadow: 0px 1px 0px #e1e1e1;
+	background: rgb(116,172,61); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(116,172,61,1) 0%, rgba(87,142,55,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(116,172,61,1)), color-stop(100%,rgba(87,142,55,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgba(116,172,61,1) 0%,rgba(87,142,55,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgba(116,172,61,1) 0%,rgba(87,142,55,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgba(116,172,61,1) 0%,rgba(87,142,55,1) 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgba(116,172,61,1) 0%,rgba(87,142,55,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#74ac3d', endColorstr='#578e37',GradientType=0 ); /* IE6-9 */
+	font-family: sans-serif;
+	cursor: pointer;
+
+	&:hover {
+		@include transform(scale(.97));
+	}
+	&:active {
+		background: #578e37;
+	}
+
+}
+html { height: 100%; }
+body {
+	height: 95%;
+	position: relative;
+    background-color: #128138;
+}
+
+img { border: 1px solid #000;}
