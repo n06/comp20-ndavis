@@ -331,6 +331,7 @@ $(document).ready(function() {
 				if (!that.lives){
 					$("body").append("<div class='ui-dialog' onclick='document.location.reload(true)'>GAME OVER. Play again!<br />Score: " + that.score + "</div>");
 					$("canvas").fadeOut();
+					$.post('http://ndavis-scorecenter.herokuapp.com/submit.json?game_title=frogger&username=nick&score=1000');
 				}
 				that.clear().init();
 				drawLoop = window.setInterval(function() {

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Comp 20, A6</title>
+<link href="stylesheets/bootstrap.css" rel="stylesheet" type="text/css">
+<link href="stylesheets/main.css" rel="stylesheet" type="text/css">
+<link href="stylesheets/bootstrap-responsive.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div class="center">
+<h1>Scorecenter Security Analysis</h1>
+<a href="#introduction">Introduction</a> | <a href="#methodology">Methodology</a> | <a href="#findings">Abstract of Findings</a> | <a href="#issues">Issues Found</a> | <a href="#conclusion">Conclusion</a>
+</div>
+
+<a name="introduction"></a><h1>Introduction</h1>
+<p>In Comp 20: Web Programming, we have learned the necessary skills to build 
+web applications on both the client side and the server side. In order to do 
+this we have learned the different paradigms of web development, such as markup,
+styling, scripting, server-side code, and data storage. One of the most 
+important parts of web development is security. Security cannot be thought of as 
+its own step in the developement process, but rather as a design paradigm to be
+considered at the conception of each project and through its growth.</p>
+<p>In this exercise we will take the assignment 5 of another student in the class 
+and perform a security audit to demonstrate our knowledge of web security, and
+to show how vulnerabilities can affect an application. Assignment 5 was to create 
+a scorecenter for web games. This scorecenter is a server-side application that 
+stores information about each game within a database. The data from each game is 
+stored as a key-value pain in mongodb.Mongodb stores elements in JSON format. This
+applictaion was created using node.js, and taught us how to use GET/PUT request to render
+dynamic pages.</p>
+
+<a name="methodology"></a><h1>Methodology</h1>
+<p>In order to properly audit the Scorecenter, we will start by attacking the application
+itself. This is known as pentesting, or blackbox testing. The next step is to do a code 
+audit of the source code itself, which is known as a white box test. In each of these parts,
+we will identify underlying security threats in detail, and how to mitigate them. In order 
+to perform our pentesting, we will use psoftware such as Burp Suite, and RATS. 
+For our white box audit, we only need the source code. To pentest the application, we first 
+need to run it. We will test it on both heroku, and a local source.</p>
+
+
+<a name="findings"></a><h1>Abstract of Findings</h1>
+<p>Within the socrecenter application there are glaring security holes. These vulnerablities boil down to
+XSS, both stored and reflected, api verification, and content sanitization. These catagories envelope all 
+of the vulnerabilites we found.
+<ol>
+<li>Cross-Site Scripting (XSS)
+<ul>
+<li>XSS is one of the most common web vulnerabilities today. XSS allows an attacker to inject client-side scripts
+into the web page, to be viewed by users. There are two types of XSS: stored and reflected.  </li>
+<li>Stored (or persistent) 
+XSS is when the injected scripts are stored by the server, and are then served to 
+the users with the normal content. Stored XSS is the highest risk vulnerability 
+between the two.</li>
+<li>Reflected (or non-persistant) XSS is much more common. 
+It is when a script is used immediately by the application, but does not get stored. 
+This is usually caused by lack of sanitation of forms in the application.</li>
+</ul>
+</li>
+<br />
+<li>API verfication
+<ul>
+<li>Any domain can use the results API to add entries to the applications database. 
+This means that anyone can manipulate the underlying databse of the application with no restrictions.. It also means, that an attacker can add 
+infinite amounts of entries </li>
+<li>These entries can have malicious, and executable elements in them. Therefore, 
+combined with a lack of sanitation, an attacker can take control of the database.</li>
+<li>An attacker can use the API to cripple the application by adding an extremely 
+large amounts of elements, which can lead to a crash of the server.</li>
+<li>An attacker can run arbitrary commands on the server by escaping the mongodb insert. This is the mongodb equivalent of sql injection</li>
+</ul>
+</li>
+<li>Content Verification
+<ul>
+<li>By sanitizing user input and output, we can mitigate many attack vectors against the application.</li>
+<li>By validating user input we essentially close the attack vector exploited in XSS, among others.</li>
+<li>If we sanitize output, we can keep any successful exploits from actually executing.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+
+
+<a name="issues"></a><h1>Issues Found</h1>
+<ol>
+<li><h2>Stored Cross-Site Scripting</h2></li>
+<ul>
+<li>Location: </span>web.js/</li>
+<li>Severity:HIGH - An attacker can store a script to be executed within the page!</li>
+<li>Description: An attacker can inject a script into the site which will  then be stored and therefore will become
+persistent.</li>
+<li>Resolution: If the application rejected any database entries with script tags of any encoding (via Regex), 
+the attack vector would be closed. Another method to resolve this attack would be through sanitization, which would allow the code through, but would not let it execute.</li>
+</ul>
+
+<li><h2>Reflected Cross-Site Scripting</h2></li>
+<ul>
+<li>Location: web.js/usersearch</li>
+<li>Severity: </span><span class="high">MEDIUM</span> </li>
+<li>Description:  Users can be sent to a page in the site with injected scripts, which could
+install malicious apps, redirect to phishing, or cause pop-ups</li>
+<li>Resolution:  By validating form input, the users are no longer susceptible to these types of attack.</li>
+</ul>
+
+<li><h2>API Verification</h2>
+<ul>
+<li>Location: web.js/ web.js/request.json</li>
+<li>Severity: MEDIUM - users can perform database operations through the API with no verification</li>
+<li>Description: Because anyone can perform database operations. An attacker can use the API to drop the entire database, or to 
+modify, add, or delete specific entries.</li>
+<li>Resolution: Each user of the API must register with the site itself. The users will be assigned their own username and password 
+for the database link, with specific permissions. This will make sure only trusted users have access to the API.</li>
+</ul>
+</li>
+
+<li><h2>Content Sanitization</h2>
+<ul>
+<li>Location: web.js/usersearch</li>
+<li>Severity: HIGH user input can be executed by the rendering engine 
+because it is not escaped properly.</li>
+<li>Description: This attack vector is what allows all of the other attacks listed. If all user 
+input was sanitized than XSS would not be possible. We must assume that no user is trustworthy, and if they are that they are stupid. Therefore we cannot allow them this fundamental access to the site.</li>
+<li>Resolution: This problem is easily solved by a simple implementation of regex before on all input. Regex can be used to escape any and all special characters of all encodings. Most likely someone has already implemented this, and it can be added to the site as a module.</li>
+</ul>
+</li>
+
+</ol>
+
+
+<a name="conclusion"></a><h1>Conclusion</h1>
+<p>Security is an extremely essential part of web development. Security is coming to the mainstream as our world revolves around software more and more. We have learned the concepts behind security, and how to address most basic attack vectors.</p>
+<p>Security can never be absolutely learned however. It is a constant struggle to stay up to date and ahead of the curve. Every day new vulnerabilities are found, and developers must make sure to patch their applications accordingly. This can be minimized, however, by designing with security in mind from the start. In this case, we did not design security from the start and therefore found a plethora of vulnerabilities</p> 
+</body>
+</html>
